@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+_archive/
+_DEV_*
+*.db
+*.xlsx
+*_logs.txt
+logs.txt
+.git/
+.gitignore
+Dockerfile
+.dockerignore
+deploy.sh
+README.md
+REPORT.md
