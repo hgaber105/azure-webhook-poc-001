@@ -124,7 +124,7 @@ def _send_apex(data):
 
 @app.route("/healthz", methods=["GET"])
 def healthz():
-    return "ok", 200
+    return "ok, up and running", 200
 
 
 @app.route("/webhook", methods=["POST"])
