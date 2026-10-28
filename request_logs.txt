@@ -1,0 +1,45 @@
+received: {'id': 1, 'person_external_id': 202501, 'first_name': 'Ahmad', 'last_name': 'Marzouk', 'gender_code': '1', 'email_address': 'ahmad.Marzouk@example.com', 'cost_center': '10009003', 'start_date': '2026-10-01'}
+sent:
+<soapenv:Envelope
+  xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:pas="http://sap.com/xi/PASEIN">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <pas:WorkforcePersonMasterDataReplicationRequest_sync>
+      <WorkforcePersonMasterData>
+        <PersonUUID>74277e4d-c758-4dbd-a1f6-c976a0e310ae</PersonUUID>
+        <PersonExternalID>202501</PersonExternalID>
+
+        <PersonalInformation>
+          <FirstName>Ahmad</FirstName>
+          <LastName>Marzouk</LastName>
+          <GenderCode>1</GenderCode>
+        </PersonalInformation>
+
+        <WorkPlaceInformation>
+          <EmailAddress>ahmad.Marzouk@example.com</EmailAddress>
+        </WorkPlaceInformation>
+
+        <WorkAgreementInformation>
+          <PersonWorkAgreementUUID>6245de47-9f26-4264-908f-a9eea36c2f4a</PersonWorkAgreementUUID>
+          <PersonWorkAgreementExternalID>202501</PersonWorkAgreementExternalID>
+          <PersonWorkAgreementType>1</PersonWorkAgreementType>
+
+          <WorkAgreementJobInformation>
+            <ValidityPeriod>
+              <StartDate>2026-10-01</StartDate>
+              <EndDate>9999-12-31</EndDate>
+            </ValidityPeriod>
+            <WorkAgreementStatus>1</WorkAgreementStatus>
+            <CompanyCode>1000</CompanyCode>
+            <CostCenter>10009003</CostCenter>
+            <WorkingTimePercentage>100.00</WorkingTimePercentage>
+            <WeeklyWorkingHours>40</WeeklyWorkingHours>
+            <WeeklyWorkDays>5</WeeklyWorkDays>
+          </WorkAgreementJobInformation>
+        </WorkAgreementInformation>
+
+      </WorkforcePersonMasterData>
+    </pas:WorkforcePersonMasterDataReplicationRequest_sync>
+  </soapenv:Body>
+</soapenv:Envelope>

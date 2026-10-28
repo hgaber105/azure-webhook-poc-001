@@ -124,11 +124,49 @@ def _send_apex(data):
 
 @app.route("/healthz", methods=["GET"])
 def healthz():
-    return "ok, up and running", 200
+    """Health check: returns the effective runtime configuration as JSON.
+
+    The endpoint is public, so credential headers (SAP_AUTH_HEADER,
+    APEX_AUTH_HEADER) are masked rather than echoed.
+    """
+    body = {
+        "Status": "Ok",
+        "Message": "Service is up and running",
+        "EnvVars": {
+            "PORT": PORT,
+            "LOG_LEVEL": os.getenv("LOG_LEVEL", "INFO"),
+            "FLAG": FLAG,
+            "DRY_RUN": DRY_RUN,
+            "SAP_URL": SAP_URL,
+            "SAP_SOAP_ACTION": sap_soap.SOAP_ACTION,
+            "RETRIES_ON_500": RETRIES_ON_500,
+            "RETRY_BACKOFF": RETRY_BACKOFF,
+            "MAX_ROWS": MAX_ROWS,
+            "REQUEST_TIMEOUT": REQUEST_TIMEOUT,
+            "MAX_UPLOAD_MB": app.config["MAX_CONTENT_LENGTH"] // (1024 * 1024),
+            "LOG_TO_FILE": LOG_TO_FILE,
+        },
+    }
+    # json.dumps (not jsonify) keeps the key order exactly as written above.
+    return app.response_class(json.dumps(body, indent=2) + "\n",
+                              status=200, mimetype="application/json")
+
+
 
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
+        # Log every incoming request exactly as received (before any validation).
+    raw_body = request.get_data(as_text=True)          # raw payload text
+    log.info(
+        "webhook request: method=%s ip=%s content_type=%s length=%s body=%s",
+        request.method,
+        request.headers.get("X-Forwarded-For", request.remote_addr),
+        request.content_type,
+        len(raw_body),
+        raw_body[:8000].replace("\r", " ").replace("\n", " "),
+    )
+    
     data = request.get_json(silent=True)
     if not data or "id" not in data:
         return "Missing id", 400
